@@ -22,12 +22,11 @@ This project demonstrates a pattern for managing MCP (Model Context Protocol) se
 │   ├── mcp/
 │   │   ├── servers/         # SOURCE OF TRUTH (Canonical definitions)
 │   │   └── adapters/        # Tool-specific mapping definitions
-│   └── scripts/
-│       ├── update_mcp_servers.py
-│       └── test_update_mcp_servers.py
+├── cmd/mcp-bridge/          # Go CLI implementation
+├── internal/mcp/            # Core logic
 ├── .mcp.json                # GENERATED (Do not edit manually)
-├── pyproject.toml           # Python project configuration
-├── mise.toml                # Tool version pinning (uv, python)
+├── go.mod                   # Go project configuration
+├── mise.toml                # Tool version pinning (go)
 └── README.md
 ```
 
@@ -36,7 +35,7 @@ This project demonstrates a pattern for managing MCP (Model Context Protocol) se
 If you add or modify a server definition in `.ai/mcp/servers/`, you must regenerate the root `.mcp.json` file:
 
 ```bash
-uv run python .ai/scripts/update_mcp_servers.py
+go run ./cmd/mcp-bridge
 ```
 
 ## Testing
@@ -44,7 +43,7 @@ uv run python .ai/scripts/update_mcp_servers.py
 Tests ensure that the generation script remains deterministic and validates the integrity of server definitions:
 
 ```bash
-uv run pytest
+go test ./...
 ```
 
 ## Benefits
