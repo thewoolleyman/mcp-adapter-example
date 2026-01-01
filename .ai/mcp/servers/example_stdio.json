@@ -1,0 +1,9 @@
+{
+  "name": "example_stdio",
+  "transport": "stdio",
+  "command": "node",
+  "args": ["./tools/example.js"],
+  "env": {
+    "EXAMPLE_MODE": "demo"
+  }
+}

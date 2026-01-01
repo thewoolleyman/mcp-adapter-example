@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "example_http": {
+      "name": "example_http",
+      "transport": "http",
+      "url": "http://localhost:3333/mcp"
+    },
+    "example_stdio": {
+      "args": [
+        "./tools/example.js"
+      ],
+      "command": "node",
+      "env": {
+        "EXAMPLE_MODE": "demo"
+      },
+      "name": "example_stdio",
+      "transport": "stdio"
+    },
+    "gitlab": {
+      "name": "gitlab",
+      "transport": "http",
+      "url": "https://gitlab.com/api/v4/mcp"
+    }
+  }
+}

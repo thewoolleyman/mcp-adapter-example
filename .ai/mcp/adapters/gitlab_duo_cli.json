@@ -1,0 +1,9 @@
+{
+  "tool": "gitlab-duo-cli",
+  "format": "mcpServers",
+  "mapping": {
+    "name": "GitLab",
+    "type": "http",
+    "url": "{{url}}"
+  }
+}
