@@ -1,5 +1,6 @@
 {
   "tool": "gitlab-duo-cli",
+  "server": "gitlab",
   "format": "mcpServers",
   "mapping": {
     "name": "GitLab",

@@ -1,0 +1,11 @@
+{
+  "tool": "codex",
+  "server": "example_stdio",
+  "format": "mcpServers",
+  "mapping": {
+    "name": "{{name}}",
+    "transport": "{{transport}}",
+    "url": "{{url}}",
+    "command": "{{command}}"
+  }
+}

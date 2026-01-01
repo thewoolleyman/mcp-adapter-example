@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "example_stdio": {
+      "command": "node",
+      "name": "example_stdio",
+      "transport": "stdio",
+      "url": "{{url}}"
+    }
+  }
+}

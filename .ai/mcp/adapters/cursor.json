@@ -1,0 +1,12 @@
+{
+  "tool": "cursor",
+  "server": "example_stdio",
+  "format": "mcpServers",
+  "mapping": {
+    "name": "{{name}}",
+    "type": "{{transport}}",
+    "url": "{{url}}",
+    "command": "{{command}}",
+    "args": "{{args}}"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "example_stdio": {
+      "args": [
+        "./tools/example.js"
+      ],
+      "command": "node",
+      "name": "example_stdio",
+      "type": "stdio",
+      "url": "{{url}}"
+    }
+  }
+}

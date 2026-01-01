@@ -1,0 +1,10 @@
+{
+  "tool": "gemini",
+  "server": "example_http",
+  "format": "mcpServers",
+  "mapping": {
+    "name": "{{name}}",
+    "type": "{{transport}}",
+    "url": "{{url}}"
+  }
+}
