@@ -1,0 +1,19 @@
+repos:
+  - repo: local
+    hooks:
+      - id: go-fmt
+        name: go fmt
+        entry: go fmt ./...
+        language: system
+        pass_filenames: false
+
+      - id: go-test
+        name: go test
+        entry: go test -v ./internal/...
+        language: system
+        pass_filenames: false
+
+  - repo: https://github.com/golangci/golangci-lint
+    rev: v1.64.5
+    hooks:
+      - id: golangci-lint

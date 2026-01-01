@@ -72,7 +72,7 @@ func TestApplyAdapter(t *testing.T) {
 	if result["uri"] != "http://test" {
 		t.Errorf("Expected uri to be http://test, got %v", result["uri"])
 	}
-	
+
 	// Check nested replacement
 	nested, ok := result["nested"].(map[string]interface{})
 	if !ok {
@@ -87,7 +87,7 @@ func TestApplyAdapter(t *testing.T) {
 	if !ok {
 		// Wait, our mock ServerConfig used []string, but LoadServers unmarshals to interface{}
 		// In this test we manually created ServerConfig with []string
-		// The substitute function handles specific types? 
+		// The substitute function handles specific types?
 		// substitute logic:
 		// case string:
 		// ... if v == placeholder { return val }
@@ -95,7 +95,7 @@ func TestApplyAdapter(t *testing.T) {
 		// Let's check what it actually is.
 		t.Logf("args type: %T", result["args"])
 	}
-	
+
 	// Since we defined s1 args as []string, it should be preserved
 	strs, ok := result["args"].([]string)
 	if ok {

@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	// Locate repo root (assuming we run from repo root or a subdir, 
+	// Locate repo root (assuming we run from repo root or a subdir,
 	// but for now let's assume CWD is repo root like the python script)
 	// Actually python script did: repo_root = Path(__file__).parent.parent.parent
 	// We will assume the user runs the binary from the repo root for now.
@@ -50,48 +50,40 @@ func main() {
 			continue
 		}
 
-				toolConfig, err := mcp.ApplyAdapter(adapter, servers)
+		toolConfig, err := mcp.ApplyAdapter(adapter, servers)
 
-				if err != nil {
+		if err != nil {
 
-					fmt.Fprintf(os.Stderr, "Error applying adapter for %s: %v\n", adapter.Tool, err)
+			fmt.Fprintf(os.Stderr, "Error applying adapter for %s: %v\n", adapter.Tool, err)
 
-					os.Exit(1)
-
-				}
-
-		
-
-				// Determine output path: use adapter.OutputPath if present, else default to .mcp.<tool>.json
-
-				toolOutputPath := adapter.OutputPath
-
-				if toolOutputPath == "" {
-
-					toolOutputPath = fmt.Sprintf(".mcp.%s.json", adapter.Tool)
-
-				}
-
-				toolOutputPath = filepath.Join(repoRoot, toolOutputPath)
-
-		
-
-				useTOML := adapter.FormatType == "toml"
-
-		
-
-				if err := mcp.GenerateToolConfig(adapter.Tool, toolConfig, adapter.Format, toolOutputPath, useTOML); err != nil {
-
-					fmt.Fprintf(os.Stderr, "Error generating config for %s: %v\n", adapter.Tool, err)
-
-					os.Exit(1)
-
-				}
-
-				fmt.Printf("Successfully generated %s\n", toolOutputPath)
-
-			}
+			os.Exit(1)
 
 		}
 
-		
+		// Determine output path: use adapter.OutputPath if present, else default to .mcp.<tool>.json
+
+		toolOutputPath := adapter.OutputPath
+
+		if toolOutputPath == "" {
+
+			toolOutputPath = fmt.Sprintf(".mcp.%s.json", adapter.Tool)
+
+		}
+
+		toolOutputPath = filepath.Join(repoRoot, toolOutputPath)
+
+		useTOML := adapter.FormatType == "toml"
+
+		if err := mcp.GenerateToolConfig(adapter.Tool, toolConfig, adapter.Format, toolOutputPath, useTOML); err != nil {
+
+			fmt.Fprintf(os.Stderr, "Error generating config for %s: %v\n", adapter.Tool, err)
+
+			os.Exit(1)
+
+		}
+
+		fmt.Printf("Successfully generated %s\n", toolOutputPath)
+
+	}
+
+}

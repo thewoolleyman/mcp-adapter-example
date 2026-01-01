@@ -104,7 +104,7 @@ func LoadAdapters(adaptersDir string) ([]AdapterConfig, error) {
 		if err := json.Unmarshal(data, &config); err != nil {
 			return nil, fmt.Errorf("failed to parse JSON from %s: %w", path, err)
 		}
-		
+
 		if config.Tool == "" {
 			// For untyped loading to check specific fields if needed
 			var raw map[string]interface{}
@@ -112,7 +112,7 @@ func LoadAdapters(adaptersDir string) ([]AdapterConfig, error) {
 			if _, ok := raw["tool"]; !ok {
 				// Just skipping if no tool is present or handle as error?
 				// Python implementation skipped if no tool.
-				continue 
+				continue
 			}
 		}
 

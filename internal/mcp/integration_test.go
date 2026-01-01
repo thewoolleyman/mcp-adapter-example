@@ -14,7 +14,7 @@ import (
 func TestIntegration_CorrectFileLocations(t *testing.T) {
 	// 1. Setup temporary workspace
 	tmpDir := t.TempDir()
-	
+
 	// Find repo root (walking up from internal/mcp)
 	cwd, _ := os.Getwd()
 	repoRoot := filepath.Dir(filepath.Dir(cwd))
@@ -134,28 +134,28 @@ command = 'node'
 		if filepath.Ext(fullPath) != tt.ext {
 			t.Errorf("File %s has wrong extension: expected %s, got %s", tt.path, tt.ext, filepath.Ext(fullPath))
 		}
-		
+
 		content, err := os.ReadFile(fullPath)
 		if err != nil {
 			t.Errorf("Failed to read file %s: %v", tt.path, err)
 			continue
 		}
-		
+
 		// Normalize line endings and whitespace for comparison (simple approach)
 		// For JSON, we might want to unmarshal and compare maps if we cared less about formatting,
 		// but since we control the generator's indentation, string comparison is stricter and fine here.
 		// However, TOML ordering might vary if not carefully controlled, but go-toml/v2 is usually deterministic enough for maps if keys are simple.
 		// Let's rely on basic string containment or trim logic if needed. For now, exact match logic.
-		
+
 		// Note: The toml library might format slightly differently (e.g. single vs double quotes).
 		// We should probably check if content *contains* key values or parse it back.
 		// Let's parse it back to map for robust comparison.
-		
+
 		if tt.ext == ".json" {
 			verifyJsonContent(t, tt.path, content, []byte(tt.expectContent))
 		} else if tt.ext == ".toml" {
 			// TOML is harder to string match exactly due to potential ordering/formatting differences
-			// We'll trust the verify content helper if we implement generic map comparison, 
+			// We'll trust the verify content helper if we implement generic map comparison,
 			// or just simple string check for now.
 			// Let's check for key substrings for TOML to avoid flakiness with ordering/quoting
 			// OR we can verify via unmarshal.
@@ -175,7 +175,7 @@ func verifyJsonContent(t *testing.T, path string, actual, expected []byte) {
 		t.Errorf("Test expectation for %s is invalid JSON: %v", path, err)
 		return
 	}
-	
+
 	if !equal(actMap, expMap) {
 		t.Errorf("File %s content mismatch.\nExpected:\n%s\nActual:\n%s", path, expected, actual)
 	}
@@ -202,7 +202,7 @@ func verifyTomlContent(t *testing.T, path string, actual, expected []byte) {
 // implementing a basic version since reflect.DeepEqual can be strict about types (float64 vs int)
 // stemming from different decoders (json uses float64, toml might use int64)
 func equal(a, b interface{}) bool {
-	// For simplicity in this test context, we can rely on reflect.DeepEqual 
+	// For simplicity in this test context, we can rely on reflect.DeepEqual
 	// IF we ensure test expectations match the decoder types.
 	// JSON unmarshals numbers to float64. TOML unmarshals integers to int64.
 	// This might be tricky. Let's try reflect.DeepEqual first and refine if needed.

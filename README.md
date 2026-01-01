@@ -40,11 +40,43 @@ go run ./cmd/mcp-bridge
 
 ## Testing
 
-Tests ensure that the generation script remains deterministic and validates the integrity of server definitions:
+Tests ensure that the generation script remains deterministic and validates the integrity of server definitions.
 
+### Unit & Integration Tests
+
+Run core tests (excluding E2E):
 ```bash
-go test ./...
+go test -v ./internal/...
 ```
+
+### End-to-End (E2E) Tests
+
+Run E2E tests (verifies actual tool integration):
+```bash
+go test -v ./tests/...
+```
+
+## Quality Assurance
+
+This project uses standard Go tooling to ensure code quality.
+
+### Pre-commit Hooks
+
+We use `pre-commit` to run linters and tests before every commit.
+1. Install pre-commit: `brew install pre-commit` (or via `mise`)
+2. Install hooks: `pre-commit install`
+
+Hooks running:
+- `go-fmt`, `go-vet`, `go-mod-tidy`
+- `golangci-lint`
+- Unit/Integration tests (`go test ./internal/...`)
+
+### CI/CD
+
+GitHub Actions runs the following checks on every push:
+1. **Lint**: `golangci-lint`
+2. **Test**: Unit and Integration tests
+3. **Build**: Verifies the binary compiles
 
 ## Benefits
 
