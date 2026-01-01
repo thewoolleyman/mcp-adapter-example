@@ -4,8 +4,6 @@
   "format": "mcpServers",
   "output_path": ".gemini/settings.json",
   "mapping": {
-    "name": "{{name}}",
-    "type": "{{transport}}",
     "url": "{{url}}"
   }
 }

@@ -81,9 +81,7 @@ func TestIntegration_CorrectFileLocations(t *testing.T) {
 			ext:  ".json",
 			expectContent: `{
   "mcpServers": {
-    "example_http": {
-      "name": "example_http",
-      "type": "http",
+    "gemini": {
       "url": "http://localhost:3333/mcp"
     }
   }
@@ -94,14 +92,11 @@ func TestIntegration_CorrectFileLocations(t *testing.T) {
 			ext:  ".json",
 			expectContent: `{
   "mcpServers": {
-    "example_stdio": {
+    "cursor": {
       "args": [
         "./tools/example.js"
       ],
-      "command": "node",
-      "name": "example_stdio",
-      "type": "stdio",
-      "url": "{{url}}"
+      "command": "node"
     }
   }
 }`,
@@ -111,8 +106,7 @@ func TestIntegration_CorrectFileLocations(t *testing.T) {
 			ext:  ".json",
 			expectContent: `{
   "mcpServers": {
-    "GitLab": {
-      "name": "GitLab",
+    "gitlab-duo-cli": {
       "type": "http",
       "url": "https://gitlab.com/api/v4/mcp"
     }
@@ -123,11 +117,9 @@ func TestIntegration_CorrectFileLocations(t *testing.T) {
 			path: ".codex/config.toml",
 			ext:  ".toml",
 			expectContent: `[mcp_servers]
-[mcp_servers.example_stdio]
+[mcp_servers.codex]
+args = [ './tools/example.js' ]
 command = 'node'
-name = 'example_stdio'
-transport = 'stdio'
-url = '{{url}}'
 `,
 		},
 	}

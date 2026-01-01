@@ -4,9 +4,7 @@
   "output_path": ".codex/config.toml",
   "format_type": "toml",
   "mapping": {
-    "name": "{{name}}",
-    "transport": "{{transport}}",
-    "url": "{{url}}",
-    "command": "{{command}}"
+    "command": "{{command}}",
+    "args": "{{args}}"
   }
 }

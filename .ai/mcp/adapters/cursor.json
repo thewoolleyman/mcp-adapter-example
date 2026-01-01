@@ -4,9 +4,6 @@
   "format": "mcpServers",
   "output_path": ".cursor/mcp.json",
   "mapping": {
-    "name": "{{name}}",
-    "type": "{{transport}}",
-    "url": "{{url}}",
     "command": "{{command}}",
     "args": "{{args}}"
   }
