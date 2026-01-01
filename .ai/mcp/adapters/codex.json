@@ -1,7 +1,8 @@
 {
   "tool": "codex",
   "server": "example_stdio",
-  "format": "mcpServers",
+  "output_path": ".codex/config.toml",
+  "format_type": "toml",
   "mapping": {
     "name": "{{name}}",
     "transport": "{{transport}}",

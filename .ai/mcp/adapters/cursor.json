@@ -2,6 +2,7 @@
   "tool": "cursor",
   "server": "example_stdio",
   "format": "mcpServers",
+  "output_path": ".cursor/mcp.json",
   "mapping": {
     "name": "{{name}}",
     "type": "{{transport}}",

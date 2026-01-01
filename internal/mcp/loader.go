@@ -68,10 +68,12 @@ func LoadServers(serversDir string) (map[string]ServerConfig, error) {
 }
 
 type AdapterConfig struct {
-	Tool    string                 `json:"tool"`
-	Server  string                 `json:"server"`
-	Format  string                 `json:"format"`
-	Mapping map[string]interface{} `json:"mapping"`
+	Tool       string                 `json:"tool"`
+	Server     string                 `json:"server"`
+	Format     string                 `json:"format"`
+	Mapping    map[string]interface{} `json:"mapping"`
+	OutputPath string                 `json:"output_path"`
+	FormatType string                 `json:"format_type"` // "json" or "toml"
 }
 
 func LoadAdapters(adaptersDir string) ([]AdapterConfig, error) {

@@ -2,6 +2,7 @@
   "tool": "gitlab-duo-cli",
   "server": "gitlab",
   "format": "mcpServers",
+  "output_path": ".gitlab/duo/mcp.json",
   "mapping": {
     "name": "GitLab",
     "type": "http",

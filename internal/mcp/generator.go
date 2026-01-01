@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
+
+	"github.com/pelletier/go-toml/v2"
 )
 
 func GenerateMCPJson(servers map[string]ServerConfig, outputPath string) error {
@@ -13,28 +16,41 @@ func GenerateMCPJson(servers map[string]ServerConfig, outputPath string) error {
 	return writeJson(outputPath, mcpConfig)
 }
 
-func GenerateToolJson(toolName string, config map[string]interface{}, formatKey string, outputPath string) error {
+func GenerateToolConfig(toolName string, config map[string]interface{}, formatKey string, outputPath string, useTOML bool) error {
+	// Ensure directory exists
+	if err := os.MkdirAll(filepath.Dir(outputPath), 0755); err != nil {
+		return fmt.Errorf("failed to create directory for %s: %w", outputPath, err)
+	}
+
 	// If formatKey is empty, default to "mcpServers" to match Python behavior
 	if formatKey == "" {
 		formatKey = "mcpServers"
 	}
-	
-	// Create the tool output structure
-	// Format: { "formatKey": { "toolName": config } }
-	// Wait, checking python implementation: 
-	// final_output = {format_key: {tool_config.get("name", tool): tool_config}}
-	
+
 	name, ok := config["name"].(string)
 	if !ok || name == "" {
 		name = toolName
 	}
-	
-	finalOutput := map[string]interface{}{
+
+	var finalOutput map[string]interface{}
+
+	if useTOML {
+		// For Codex TOML, it seems the format is [mcp_servers.<name>]
+		// So we structure it accordingly.
+		finalOutput = map[string]interface{}{
+			"mcp_servers": map[string]interface{}{
+				name: config,
+			},
+		}
+		return writeToml(outputPath, finalOutput)
+	}
+
+	finalOutput = map[string]interface{}{
 		formatKey: map[string]interface{}{
 			name: config,
 		},
 	}
-	
+
 	return writeJson(outputPath, finalOutput)
 }
 
@@ -50,6 +66,21 @@ func writeJson(path string, data interface{}) error {
 	if err := encoder.Encode(data); err != nil {
 		return fmt.Errorf("failed to encode JSON to %s: %w", path, err)
 	}
-	
+
+	return nil
+}
+
+func writeToml(path string, data interface{}) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return fmt.Errorf("failed to create file %s: %w", path, err)
+	}
+	defer file.Close()
+
+	encoder := toml.NewEncoder(file)
+	if err := encoder.Encode(data); err != nil {
+		return fmt.Errorf("failed to encode TOML to %s: %w", path, err)
+	}
+
 	return nil
 }

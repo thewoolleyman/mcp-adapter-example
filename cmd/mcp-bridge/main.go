@@ -50,17 +50,48 @@ func main() {
 			continue
 		}
 
-		toolConfig, err := mcp.ApplyAdapter(adapter, servers)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error applying adapter for %s: %v\n", adapter.Tool, err)
-			os.Exit(1)
+				toolConfig, err := mcp.ApplyAdapter(adapter, servers)
+
+				if err != nil {
+
+					fmt.Fprintf(os.Stderr, "Error applying adapter for %s: %v\n", adapter.Tool, err)
+
+					os.Exit(1)
+
+				}
+
+		
+
+				// Determine output path: use adapter.OutputPath if present, else default to .mcp.<tool>.json
+
+				toolOutputPath := adapter.OutputPath
+
+				if toolOutputPath == "" {
+
+					toolOutputPath = fmt.Sprintf(".mcp.%s.json", adapter.Tool)
+
+				}
+
+				toolOutputPath = filepath.Join(repoRoot, toolOutputPath)
+
+		
+
+				useTOML := adapter.FormatType == "toml"
+
+		
+
+				if err := mcp.GenerateToolConfig(adapter.Tool, toolConfig, adapter.Format, toolOutputPath, useTOML); err != nil {
+
+					fmt.Fprintf(os.Stderr, "Error generating config for %s: %v\n", adapter.Tool, err)
+
+					os.Exit(1)
+
+				}
+
+				fmt.Printf("Successfully generated %s\n", toolOutputPath)
+
+			}
+
 		}
 
-		toolOutputPath := filepath.Join(repoRoot, fmt.Sprintf(".mcp.%s.json", adapter.Tool))
-		if err := mcp.GenerateToolJson(adapter.Tool, toolConfig, adapter.Format, toolOutputPath); err != nil {
-			fmt.Fprintf(os.Stderr, "Error generating config for %s: %v\n", adapter.Tool, err)
-			os.Exit(1)
-		}
-		fmt.Printf("Successfully generated %s\n", toolOutputPath)
-	}
-}
+		

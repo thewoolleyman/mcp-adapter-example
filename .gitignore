@@ -116,10 +116,17 @@ celerybeat.pid
 .env
 .venv
 env/
-virtualenv/
+venv/
 ENV/
 env.bak/
-virtualenv.bak/
+venv.bak/
+
+# Generated MCP configurations
+.gemini/
+.cursor/
+.gitlab/
+.codex/
+.mcp.json
 
 # Spyder project settings
 .spyderproject

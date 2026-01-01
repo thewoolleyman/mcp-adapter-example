@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "example_http": {
-      "name": "example_http",
-      "type": "http",
-      "url": "http://localhost:3333/mcp"
-    }
-  }
-}

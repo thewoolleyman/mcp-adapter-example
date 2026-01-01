@@ -2,6 +2,7 @@
   "tool": "gemini",
   "server": "example_http",
   "format": "mcpServers",
+  "output_path": ".gemini/settings.json",
   "mapping": {
     "name": "{{name}}",
     "type": "{{transport}}",
