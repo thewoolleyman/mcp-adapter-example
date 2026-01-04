@@ -6,15 +6,15 @@
       "url": "http://localhost:3333/mcp"
     },
     "example_stdio": {
+      "name": "example_stdio",
+      "transport": "stdio",
+      "command": "node",
       "args": [
         "./tools/example.js"
       ],
-      "command": "node",
       "env": {
         "EXAMPLE_MODE": "demo"
-      },
-      "name": "example_stdio",
-      "transport": "stdio"
+      }
     },
     "gitlab": {
       "name": "gitlab",

@@ -22,11 +22,12 @@ This project demonstrates a pattern for managing MCP (Model Context Protocol) se
 │   ├── mcp/
 │   │   ├── servers/         # SOURCE OF TRUTH (Canonical definitions)
 │   │   └── adapters/        # Tool-specific mapping definitions
-├── cmd/mcp-bridge/          # Go CLI implementation
-├── internal/mcp/            # Core logic
+│   └── scripts/
+│       ├── update_mcp_servers.py       # MCP configuration generator
+│       └── test_update_mcp_servers.py  # Tests
 ├── .mcp.json                # GENERATED (Do not edit manually)
-├── go.mod                   # Go project configuration
-├── mise.toml                # Tool version pinning (go)
+├── pyproject.toml           # Python project configuration
+├── mise.toml                # Tool version pinning (python, uv)
 └── README.md
 ```
 
@@ -35,48 +36,43 @@ This project demonstrates a pattern for managing MCP (Model Context Protocol) se
 If you add or modify a server definition in `.ai/mcp/servers/`, you must regenerate the root `.mcp.json` file:
 
 ```bash
-go run ./cmd/mcp-bridge
+uv run python .ai/scripts/update_mcp_servers.py
 ```
+
+This will also generate tool-specific configuration files based on adapters in `.ai/mcp/adapters/`:
+- `.cursor/mcp.json` - Cursor configuration
+- `.gemini/settings.json` - Gemini CLI configuration
+- `.codex/config.toml` - Codex configuration
+- `.gitlab/duo/mcp.json` - GitLab Duo CLI configuration
 
 ## Testing
 
 Tests ensure that the generation script remains deterministic and validates the integrity of server definitions.
 
-### Unit & Integration Tests
-
-Run core tests (excluding E2E):
 ```bash
-go test -v ./internal/...
-```
-
-### End-to-End (E2E) Tests
-
-Run E2E tests (verifies actual tool integration):
-```bash
-go test -v ./tests/...
+uv run pytest -v
 ```
 
 ## Quality Assurance
 
-This project uses standard Go tooling to ensure code quality.
+This project uses Python tooling to ensure code quality.
 
 ### Pre-commit Hooks
 
 We use `pre-commit` to run linters and tests before every commit.
-1. Install pre-commit: `brew install pre-commit` (or via `mise`)
-2. Install hooks: `pre-commit install`
+1. Install dependencies: `uv sync`
+2. Install hooks: `uv run pre-commit install`
 
 Hooks running:
-- `go-fmt`, `go-vet`, `go-mod-tidy`
-- `golangci-lint`
-- Unit/Integration tests (`go test ./internal/...`)
+- `trailing-whitespace`, `end-of-file-fixer`, `check-yaml`, `check-json`
+- `ruff` (linting and formatting)
+- `pytest` (tests)
 
 ### CI/CD
 
 GitHub Actions runs the following checks on every push:
-1. **Lint**: `golangci-lint`
-2. **Test**: Unit and Integration tests
-3. **Build**: Verifies the binary compiles
+1. **Lint**: `ruff check` and `ruff format --check`
+2. **Test**: pytest
 
 ## Benefits
 

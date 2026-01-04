@@ -1,4 +1,4 @@
 [tools]
-go = "1.23"
-golangci-lint = "latest"
+uv = "latest"
+python = "3.12"
 pre-commit = "latest"
